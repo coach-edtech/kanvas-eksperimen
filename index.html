@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=1920, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -145,6 +145,9 @@
   }
   .credit{font-family:'Barlow',sans-serif;font-weight:300;font-size:11.5px;color:#888;text-align:right;max-width:300px;line-height:1.4;}
   .vrule{width:1px;height:32px;background:#999;margin:0 6px;}
+
+  /* ---------- Fit to viewport (layar saja; print pakai skala A4 sendiri) ---------- */
+  @media screen{ .sheet{ zoom:var(--fit,1); } }
 
   /* ---------- Print ---------- */
   @page{size:297mm 210mm;margin:0;}
@@ -299,5 +302,15 @@
 
 </div>
 </div>
+<script>
+  // ponytail: kanvas fixed 1920px -> skala sesuai lebar layar, tanpa library
+  (function(){
+    var s=Math.min(1,window.innerWidth/1920);
+    document.documentElement.style.setProperty('--fit',s);
+  })();
+  addEventListener('resize',function(){
+    document.documentElement.style.setProperty('--fit',Math.min(1,innerWidth/1920));
+  });
+</script>
 </body>
 </html>

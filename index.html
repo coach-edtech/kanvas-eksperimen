@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>Kanvas Eksperimen (Terisi) — Travel Umrah</title>
+<style>
+  /* ponytail: woff2 lokal tidak ada -> pakai CDN Google Fonts (self-host kalau butuh offline) */
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#fff;}
+  body{font-family:'Barlow',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antialiased;}
+
+  .sheet{position:relative;width:1920px;height:1358px;overflow:hidden;background:#fff;}
+  .page{position:absolute;left:0;top:0;width:1920px;height:1358px;background:#fff;overflow:hidden;}
+
+  /* ---------- Title ---------- */
+  .title{
+    position:absolute;left:64px;top:18px;
+    font-family:'Oswald',sans-serif;font-weight:700;
+    font-size:66px;letter-spacing:-0.5px;line-height:1;text-transform:uppercase;
+  }
+  .subtitle{
+    position:absolute;left:66px;top:88px;
+    font-family:'Barlow',sans-serif;font-weight:400;font-size:19px;color:#555;
+    letter-spacing:0.3px;
+  }
+  .subtitle b{font-weight:600;color:#111;}
+
+  /* ---------- Logo ---------- */
+  .logo{position:absolute;right:64px;top:26px;display:flex;align-items:center;gap:14px;}
+  .logo-mark{width:52px;height:56px;}
+  .logo-text{
+    font-family:'Oswald',sans-serif;font-weight:700;font-size:21px;line-height:1.16;
+    letter-spacing:0.2px;text-transform:uppercase;text-align:left;
+  }
+
+  /* ---------- Frame ---------- */
+  .frame{position:absolute;left:64px;top:132px;width:1792px;height:1088px;border:5px solid #111;}
+  .col{position:absolute;top:0;height:100%;width:893px;}
+  .col-left{left:0;border-right:4px solid #111;}
+  .col-right{left:897px;}
+
+  .box{position:absolute;left:0;width:100%;border-bottom:4px solid #111;padding:22px 32px 0 32px;overflow:hidden;}
+  .box.no-border{border-bottom:none;}
+
+  .l-risk{top:0;height:302px;}
+  .l-hyp{top:302px;height:350px;}
+  .l-setup{top:652px;height:431px;}
+  .r-results{top:0;height:332px;}
+  .r-concl{top:332px;height:448px;}
+  .r-next{top:780px;height:303px;}
+
+  /* ---------- Typography ---------- */
+  .kicker{
+    font-family:'Oswald',sans-serif;font-weight:500;font-size:14px;letter-spacing:2.2px;
+    text-transform:uppercase;color:#7a7a7a;margin-bottom:2px;
+  }
+  h2{
+    font-family:'Oswald',sans-serif;font-weight:300;font-size:31px;line-height:1.12;
+    letter-spacing:1.4px;text-transform:uppercase;margin-bottom:5px;
+  }
+  .prompt{
+    font-family:'Barlow',sans-serif;font-style:italic;font-weight:300;font-size:16px;
+    line-height:1.35;color:#8a8a8a;margin-bottom:13px;
+  }
+  .body{font-family:'Barlow',sans-serif;font-weight:300;font-size:18px;line-height:1.46;color:#222;}
+  .body b{font-weight:600;color:#111;}
+  .body + .body{margin-top:9px;}
+  .note{
+    margin-top:11px;padding-left:11px;border-left:2px solid #c9c9c9;
+    font-family:'Barlow',sans-serif;font-weight:300;font-size:15px;line-height:1.4;color:#6d6d6d;
+  }
+  .tag{
+    display:inline-block;font-family:'Oswald',sans-serif;font-weight:500;font-size:12px;
+    letter-spacing:1.6px;text-transform:uppercase;color:#111;
+    border:1px solid #111;padding:1px 8px;margin-right:8px;vertical-align:2px;
+  }
+
+  /* ---------- Hypothesis form ---------- */
+  .form{margin-top:14px;}
+  .row{display:flex;align-items:baseline;margin-bottom:13px;}
+  .row .lbl{
+    font-family:'Barlow',sans-serif;font-weight:400;font-size:17px;
+    width:172px;flex:none;color:#222;white-space:nowrap;
+  }
+  .row .fill{
+    flex:1;border-bottom:1px solid #9a9a9a;
+    font-family:'Barlow',sans-serif;font-weight:300;font-size:16px;color:#333;padding-bottom:2px;
+  }
+
+  /* ---------- Spec table ---------- */
+  .spec{margin-top:13px;border-top:1px solid #d5d5d5;}
+  .spec .srow{display:flex;align-items:baseline;border-bottom:1px solid #e6e6e6;padding:5px 0;}
+  .spec .sk{
+    font-family:'Barlow',sans-serif;font-weight:500;font-size:15px;color:#777;
+    width:168px;flex:none;letter-spacing:0.3px;
+  }
+  .spec .sv{font-family:'Barlow',sans-serif;font-weight:400;font-size:17px;color:#111;}
+
+  /* ---------- Metrics ---------- */
+  .metrics{margin-top:6px;border-top:1px solid #d5d5d5;}
+  .mhead,.mrow{display:flex;align-items:baseline;border-bottom:1px solid #e6e6e6;}
+  .mhead{padding:4px 0 5px;}
+  .mhead span{
+    font-family:'Oswald',sans-serif;font-weight:400;font-size:12px;letter-spacing:1.8px;
+    text-transform:uppercase;color:#8a8a8a;
+  }
+  .mrow{padding:8px 0;}
+  .mrow .mi{
+    flex:none;width:26px;font-family:'Oswald',sans-serif;font-weight:500;font-size:15px;color:#999;
+  }
+  .mrow .mt{
+    flex:1;font-family:'Barlow',sans-serif;font-weight:400;font-size:17px;color:#111;line-height:1.35;
+  }
+  .mrow .mv{
+    flex:none;width:112px;text-align:right;font-family:'Barlow',sans-serif;font-weight:600;
+    font-size:17px;color:#111;
+  }
+  .mrow .mact{
+    flex:none;width:150px;margin-left:16px;border-bottom:1px solid #9a9a9a;
+    height:20px;
+  }
+
+  /* ---------- Checkboxes ---------- */
+  .checks{margin-top:16px;}
+  .check{display:flex;align-items:center;gap:18px;margin-bottom:12px;}
+  .boxsq{width:40px;height:40px;border:3px solid #111;flex:none;}
+  .check .ct{font-family:'Oswald',sans-serif;font-weight:400;font-size:22px;letter-spacing:1.4px;text-transform:uppercase;}
+  .check .cd{font-family:'Barlow',sans-serif;font-weight:300;font-size:15px;color:#6d6d6d;}
+
+  /* ---------- Footer ---------- */
+  .footer{position:absolute;left:64px;right:64px;top:1232px;display:flex;align-items:flex-start;justify-content:space-between;}
+  .lic{display:flex;align-items:center;gap:12px;}
+  .ccicons{display:flex;gap:9px;align-items:center;margin-right:6px;}
+  .ccicons svg{display:block;}
+  .byline{font-family:'Barlow',sans-serif;font-weight:400;font-size:18px;letter-spacing:0.2px;color:#222;}
+  .byline b{font-weight:700;}
+  .lictext{
+    margin-top:9px;font-family:'Barlow',sans-serif;font-weight:300;
+    font-size:11.5px;line-height:1.42;color:#666;max-width:520px;
+  }
+  .credit{font-family:'Barlow',sans-serif;font-weight:300;font-size:11.5px;color:#888;text-align:right;max-width:300px;line-height:1.4;}
+  .vrule{width:1px;height:32px;background:#999;margin:0 6px;}
+
+  /* ---------- Print ---------- */
+  @page{size:297mm 210mm;margin:0;}
+  @media print{
+    html,body{width:297mm;height:210mm;overflow:hidden;margin:0;padding:0;}
+    .sheet{width:297mm;height:210mm;}
+    .page{transform:scale(0.5846);transform-origin:top left;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+<div class="page">
+
+  <div class="title">Kanvas Eksperimen</div>
+  <div class="subtitle">Travel Umrah — <b>Menguji hipotesis konsultasi personal untuk menaikkan pendaftaran</b></div>
+
+  <div class="logo">
+    <svg class="logo-mark" viewBox="0 0 52 56" fill="none" stroke="#111" stroke-width="3.4">
+      <path d="M10 20 C16 10, 30 8, 36 16 C41 23, 34 30, 24 34 C15 38, 12 44, 16 49 C20 54, 30 51, 36 44" stroke-linecap="round"/>
+      <path d="M40 12 L40 44" stroke-linecap="round"/>
+      <path d="M4 28 L48 28" stroke-width="2.2"/>
+      <path d="M44 24 L49 28 L44 32" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
+      <path d="M8 24 L3 28 L8 32" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
+    </svg>
+    <div class="logo-text">Desain<br>Bisnis<br>Lebih Baik</div>
+  </div>
+
+  <div class="frame">
+    <div class="col col-left left">
+
+      <div class="box l-risk">
+        <div class="kicker">01 · Masalah yang ingin diselesaikan</div>
+        <h2>Asumsi Paling Berisiko</h2>
+        <div class="prompt">Asumsi berisiko apa yang ingin Anda uji?</div>
+        <div class="body"><b>Masalah:</b> Banyak calon jamaah menghubungi travel untuk bertanya tentang paket umrah, tetapi hanya sedikit yang akhirnya mendaftar dan membayar uang muka.</div>
+        <div class="body"><b>Asumsi paling berisiko:</b> calon jamaah belum cukup yakin terhadap kualitas pelayanan dan pendampingan travel.</div>
+        <div class="note">Catatan: hindari jawaban terlalu umum seperti “pemasaran kurang bagus” atau “penjualan menurun”.</div>
+      </div>
+
+      <div class="box l-hyp">
+        <div class="kicker">02 · Dugaan solusi</div>
+        <h2>Hipotesis yang Dapat Disangkal</h2>
+        <div class="prompt">Susun hipotesis Anda.</div>
+        <div class="body">Kami menduga calon jamaah belum cukup yakin terhadap kualitas pelayanan dan pendampingan travel. Jika kami memberikan konsultasi personal sebelum mereka memutuskan membeli paket, tingkat kepercayaan dan kemungkinan pendaftaran akan meningkat.</div>
+
+        <div class="form">
+          <div class="row">
+            <div class="lbl">Kami yakin bahwa</div>
+            <div class="fill">memberikan konsultasi personal kepada calon jamaah sebelum mereka membeli paket</div>
+          </div>
+          <div class="row">
+            <div class="lbl">akan menghasilkan</div>
+            <div class="fill">peningkatan tingkat kepercayaan dan pendaftaran yang membayar uang muka</div>
+          </div>
+          <div class="row">
+            <div class="lbl">dalam</div>
+            <div class="fill">14 hari</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box l-setup no-border">
+        <div class="kicker">03 · Percobaan yang akan dilakukan</div>
+        <h2>Persiapan Eksperimen</h2>
+        <div class="prompt">Tindakan nyata apa yang akan diuji untuk membuktikan dugaan tersebut?</div>
+        <div class="body">Selama 14 hari, tim sales akan menawarkan konsultasi personal selama 20 menit kepada 30 calon jamaah potensial. Konsultasi membahas kebutuhan, kekhawatiran, fasilitas, layanan, dan proses keberangkatan.</div>
+
+        <div class="spec">
+          <div class="srow"><div class="sk">Durasi eksperimen</div><div class="sv">14 hari</div></div>
+          <div class="srow"><div class="sk">Target peserta</div><div class="sv">30 calon jamaah potensial</div></div>
+          <div class="srow"><div class="sk">Durasi konsultasi</div><div class="sv">20 menit per calon jamaah</div></div>
+          <div class="srow"><div class="sk">Pelaksana</div><div class="sv">Tim sales</div></div>
+          <div class="srow"><div class="sk">Isi konsultasi</div><div class="sv">Kebutuhan, kekhawatiran, fasilitas, layanan, proses keberangkatan</div></div>
+        </div>
+        <div class="note">Eksperimen harus cukup kecil agar bisa dijalankan tanpa mengubah seluruh sistem bisnis.</div>
+      </div>
+
+    </div>
+
+    <div class="col col-right right">
+
+      <div class="box r-results">
+        <div class="kicker">04 · Ukuran keberhasilan</div>
+        <h2>Hasil</h2>
+        <div class="prompt">Catat hasil kualitatif atau kuantitatif dari eksperimen.</div>
+
+        <div class="metrics">
+          <div class="mhead"><span style="flex:none;width:26px"></span><span style="flex:1">Indikator</span><span style="flex:none;width:112px;text-align:right">Target</span><span style="flex:none;width:166px;margin-left:16px">Aktual</span></div>
+          <div class="mrow"><div class="mi">01</div><div class="mt">Calon jamaah ditawari konsultasi</div><div class="mv">30 orang</div><div class="mact"></div></div>
+          <div class="mrow"><div class="mi">02</div><div class="mt">Mengikuti konsultasi</div><div class="mv">Min. 20 orang</div><div class="mact"></div></div>
+          <div class="mrow"><div class="mi">03</div><div class="mt">Melakukan pembayaran uang muka</div><div class="mv">Min. 5 orang</div><div class="mact"></div></div>
+        </div>
+        <div class="note">Angka target bersifat ilustratif untuk eksperimen ini, bukan standar keberhasilan industri.</div>
+      </div>
+
+      <div class="box r-concl">
+        <div class="kicker">05 · Pembelajaran dan keputusan</div>
+        <h2>Kesimpulan</h2>
+        <div class="prompt">Apakah hasil sesuai dengan hipotesis, atau justru bertentangan? Apakah hasilnya cukup jelas?</div>
+
+        <div class="body">Jika konsultasi menghasilkan peningkatan pendaftaran, pendekatan ini akan dipertahankan dan diperbaiki.</div>
+        <div class="body">Jika banyak calon jamaah mengikuti konsultasi tetapi tidak mendaftar, kami akan mengevaluasi penawaran, harga, proses follow-up, dan faktor kepercayaan.</div>
+
+        <div class="checks">
+          <div class="check"><div class="boxsq"></div><div><div class="ct">Keep</div><div class="cd">Pertahankan dan lanjutkan.</div></div></div>
+          <div class="check"><div class="boxsq"></div><div><div class="ct">Change</div><div class="cd">Perbaiki pendekatan.</div></div></div>
+          <div class="check"><div class="boxsq"></div><div><div class="ct">Kill</div><div class="cd">Hentikan jika tidak memberikan nilai.</div></div></div>
+        </div>
+      </div>
+
+      <div class="box r-next no-border">
+        <h2>Langkah Berikutnya</h2>
+        <div class="prompt">Apa langkah berikutnya Anda?</div>
+        <div class="body">Jalankan eksperimen konsultasi 14 hari kepada 30 calon jamaah potensial, catat ketiga metrik pada setiap akhir pekan, lalu ambil keputusan <b>KEEP / CHANGE / KILL</b> berdasarkan hasil.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>
+      <div class="lic">
+        <div class="ccicons">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6">
+            <circle cx="12" cy="12" r="10"/><path d="M14.8 9.6a3 3 0 1 0 0 5.2" stroke-linecap="round"/>
+          </svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6">
+            <circle cx="12" cy="12" r="10"/><path d="M9.6 9.4a3 3 0 1 1 0 4.6M13.6 9.2h3.2v4.6h-3.2z" stroke-linejoin="round"/>
+          </svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6">
+            <circle cx="12" cy="12" r="10"/><path d="M9.4 12a2.6 2.6 0 1 0 5.2 0 2.6 2.6 0 1 0-5.2 0"/>
+          </svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6.4v11.2M12 6.4l4 4M12 6.4L8 10.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.6">
+            <circle cx="12" cy="12" r="10"/><path d="M12 7.2v10.4M9 10.4h6M9 13.6h6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="vrule"></div>
+        <div class="byline">OLEH <b>DESIGNABETTERBUSINESS.COM</b></div>
+      </div>
+      <div class="lictext">
+        Karya ini dilisensikan di bawah Creative Commons Attribution-ShareAlike 4.0 International License.<br>
+        http://creativecommons.org/licenses/by-sa/4.0 atau kirim surat ke Creative Commons,<br>
+        171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+      </div>
+    </div>
+    <div class="credit">Kanvas Eksperimen ini dibuat oleh Ash Maurya</div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>
